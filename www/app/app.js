@@ -9,7 +9,7 @@
             templateUrl: "app/calcList/tpl.calcList.html",
             controller: "ctrl.calcList"
         })
-        .state('calcListadd', {
+        .state('calcListAdd', {
             url: "/calcListAdd",
             templateUrl: "app/calcList/add/tpl.calcListAdd.html",
             controller: "ctrl.calcList.Add"
@@ -26,7 +26,11 @@
             templateUrl: "app/dataItemList/tpl.dataItemList.html",
             controller: "ctrl.dataItemList"
             })
-         })
-
+        .state('dataItemAdd', {
+            url: "/dataItemAdd",
+            templateUrl: "app/dataItemList/add/tpl.dataItemAdd.html",
+            controller: "ctrl.dataItem.Add"
+        })
+    })
 
 calcBuilder.constant('FIREBASEURL', 'https://calulationbuilder.firebaseio.com/')
