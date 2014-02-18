@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<bundle minify="true" runOnBuild="true" output="calcBuilder.js">
+  
+  
+  
+  <!--The order of the <file> elements determines the order of the file contents when bundled.-->
+
+  <file>/app/app.js</file>
+  
+  <file>/app/calcEditor/ctrl.calcEditor.js</file>
+  <file>/app/calcList/ctrl.calcList.js</file>
+  <file>/app/dataItemList/ctrl.dataItemList.js</file>
+
+</bundle>
