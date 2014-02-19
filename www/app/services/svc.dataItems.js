@@ -7,7 +7,7 @@
 
     this.addDataItem = function (newCalc) {
 
-        this.Calulations.$add(newCalc);
+        this.dataItems.$add(newCalc);
 
     }
 

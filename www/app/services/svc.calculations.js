@@ -1,13 +1,13 @@
-﻿calcBuilder.service('spendingService', ['FIREBASEURL', '$firebase', function (firebaseURL, $firebase) {
+﻿calcBuilder.service('calculationService', ['FIREBASEURL', '$firebase', function (firebaseURL, $firebase) {
 
-    var fbURL = firebaseURL + '1/calcs/'
+    var fbURL = firebaseURL + '1/calculation/'
     var ref = new Firebase(fbURL);
 
-    this.Calulations = $firebase(ref);
+    this.calulations = $firebase(ref);
 
-    this.addCalc = function (newCalc) {
+    this.addNew = function (newCalculation) {
 
-        this.Calulations.$add(newCalc);
+        this.calulations.$add(newCalculation);
 
     }
 

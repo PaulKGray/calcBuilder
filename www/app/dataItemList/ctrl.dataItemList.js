@@ -1,5 +1,5 @@
-﻿calcBuilder.controller('ctrl.dataItemList', ['$scope', '$state', function ($scope, $state) {
+﻿calcBuilder.controller('ctrl.dataItemList', ['$scope', '$state', 'dataItemService', function ($scope, $state, dataItemService) {
 
-
+    $scope.dataItems = dataItemService.dataItems;
 
 }])

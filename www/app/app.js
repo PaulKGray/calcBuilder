@@ -9,7 +9,7 @@
             templateUrl: "app/calcList/tpl.calcList.html",
             controller: "ctrl.calcList"
         })
-        .state('calcListAdd', {
+        .state('calcListadd', {
             url: "/calcListAdd",
             templateUrl: "app/calcList/add/tpl.calcListAdd.html",
             controller: "ctrl.calcList.Add"

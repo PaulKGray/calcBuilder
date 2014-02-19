@@ -6,19 +6,11 @@
 <a ui-sref="calcListadd">Add New Calculation</a>
 
 <div class="list-group">
-    <a href="#" class="list-group-item">
-        <h4 class="list-group-item-heading">C1</h4>
-        <p class="list-group-item-text">
-
-            (There is an overdraft)
+    <a href="#" ng-repeat="calculation in calculations" class="list-group-item">
+        <h4 class="list-group-item-heading" ng-bind="calculation.name"></h4>
+        <p class="list-group-item-text" ng-bind="calculation.calculation">
         </p>
     </a>
 
-    <a href="#" class="list-group-item">
-        <h4 class="list-group-item-heading">C2</h4>
-        <p class="list-group-item-text">
-
-            (Sole budget) AND (Joint debts equal to or greater than one)
-        </p>
-    </a>
+ 
 </div>

@@ -1,28 +1,116 @@
 ﻿
-<h2>Add New Calculation</h2>
+<form role="form" name="form" ng-submit="addNew()" novalidate>
+    <div class="row">
 
-<form role="form">
-    <div class="form-group">
-        <label for="Name">Calculation Name</label>
-        <input type="text" class="form-control" id="Name" placeholder="Calculation Name">
-    </div>
-    <div class="form-group">
-        <label for="calculation">Calculation</label>
 
-        <textarea id="calculation" class="form-control" placeholder="Enter Calculation Here"></textarea>
+        <div class="col-md-12">
 
-    </div>
-    <div class="radio">
-        <label>
-            <input name="optionsRadios" type="radio" id="optionsRadiosBoolean" value="Boolean"> Boolean
-        </label>
-    </div>
-    <div class="radio">
-        <label>
-            <input name="optionsRadios" type="radio" id="optionsRadiosBoolean" value="numeric"> numeric
-        </label>
+            <h4>New Calculation</h4>
+            <div class="form-group">
+                <label for="Name">Calculation Name</label>
+
+
+                <input type="text" id="name" class="form-control" name="name" ng-model="calculation.Name" placeholder="Calculation Name" required>
+
+            </div>
+            <div class="alert alert-danger" ng-show="submitted && form.name.$error.required">This field is required</div>
+
+        </div>
+
     </div>
 
+    <div class="row">
+        <div class="col-md-12">
 
-    <button type="submit" class="btn btn-default">Submit</button>
+            <div class="form-group">
+
+                <h4>Data Items</h4>
+
+                <button type="button" ng-repeat="dataItem in dataItems" ng-disabled="!addRules.dataItem" class="btn btn-info" ng-bind="dataItem.name" ng-click="AddTag(dataItem.name,1)"></button>
+
+
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+    <div class="row">
+        <div class="col-md-3">
+
+            <div class="form-group">
+
+                <h4>Operands</h4>
+
+                <button type="button" ng-disabled="!addRules.operands" class="btn btn-warning" ng-click="AddTag('+',2)">+</button>
+                <button type="button" ng-disabled="!addRules.operands" class="btn btn-warning" ng-click="AddTag('-',2)">-</button>
+                <button type="button" ng-disabled="!addRules.operands" class="btn btn-warning" ng-click="AddTag('*',2)">*</button>
+                <button type="button" ng-disabled="!addRules.operands" class="btn btn-warning" ng-click="AddTag('/',2)">/</button>
+                <button type="button" ng-disabled="!addRules.bracketStart" class="btn btn-success" ng-click="AddTag('(',3)">(</button>
+                <button type="button" ng-disabled="!addRules.bracketEnd" class="btn btn-success" ng-click="AddTag(')',4)">)</button>
+
+            </div>
+
+
+
+
+            <div class="form-group">
+
+                <h4>Conditional</h4>
+                <button type="button" ng-disabled="!addRules.conditional" class="btn btn-info">if</button>
+                <button type="button" ng-disabled="!addRules.conditional" class="btn btn-info">then</button>
+                <button type="button" ng-disabled="!addRules.conditional" class="btn btn-info">and</button>
+                <button type="button" ng-disabled="!addRules.conditional" class="btn btn-info">or</button>
+                <button type="button" ng-disabled="!addRules.conditional" class="btn btn-info">not</button>
+
+            </div>
+
+
+
+        </div>
+
+        <div class="col-md-9">
+
+
+            <div class="form-group">
+                <h4>Calculation</h4>
+
+                <div name="calculationView" calceditor ng-bind-html="calculationHtml | to_trusted" class="form-control" contenteditable="true">
+
+
+                </div>
+
+                <textarea id="calculation" name="calculation" class="form-control" ng-model="calculation.calculation" placeholder="Enter Calculation Here" required></textarea>
+
+            </div>
+            <div class="alert alert-danger" ng-show="submitted && form.calculation.$error.required">This field is required</div>
+
+
+        </div>
+        <div class="col-md-12">
+
+            <h4>Boolean</h4>
+            <div class="form-group">
+                <button type="button" class="btn btn-default" ng-click="AddTag('<=',3)">Less Than Or Equal to <=</button>
+                <button type="button" class="btn btn-default" ng-click="AddTag('<',3)">Less Than <</button>
+                <button type="button" class="btn btn-default" ng-click="AddTag('<',3)">Greater Than ></button>
+                <button type="button" class="btn btn-default" ng-click="AddTag('=>',3)">Greater Than Or Equal to =></button>
+                <button type="button" class="btn btn-default" ng-click="AddTag('==',3)">Equal to ==</button>
+                <button type="button" class="btn btn-default" ng-click="AddTag('!=',3)">Not Equal to !=</button>
+
+            </div>
+
+
+        </div>
+    </div>
+
+
+    <button type="submit" class="btn btn-primary" ng-click="submitted=true">Submit</button>
+
+
 </form>
