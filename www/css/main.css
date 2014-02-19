@@ -4,3 +4,12 @@
 .starter-template {
   padding: 40px 15px;
 }
+
+.button-box {
+    display:flexbox
+
+}
+.button-box button {
+    margin-right:5px;
+    margin-bottom:5px;
+}

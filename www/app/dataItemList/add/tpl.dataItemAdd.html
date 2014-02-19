@@ -13,15 +13,15 @@
     </div>
     <div class="radio">
         <label>
-            <input name="type" type="radio" id="typeBoolean" ng-model="dataItem.type" value="Boolean"> Boolean
+            <input name="type" type="radio" id="typeBoolean" ng-model="dataItem.type" value="Boolean" required> Boolean
         </label>
     </div>
     <div class="radio">
         <label>
-            <input name="type" type="radio" id="typeNumeric" ng-model="dataItem.type" value="numeric"> numeric
+            <input name="type" type="radio" id="typeNumeric" ng-model="dataItem.type" value="numeric" required> numeric
         </label>
     </div>
-
+    <div class="alert alert-danger" ng-show="submitted && form.type.$error.required">This field is required</div>
 
 
     <button type="submit" class="btn btn-default" ng-click="submitted=true">Submit</button>

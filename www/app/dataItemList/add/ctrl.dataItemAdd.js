@@ -2,12 +2,14 @@
 
 	$scope.addNew = function () {
 
+	    if ($scope.form.$valid){
+
 	    var newDataItem = $scope.dataItem;
 
 	    dataItemService.addDataItem(newDataItem);
 
 	    $state.transitionTo('dataItemList');
-
+	    }
 	};
 
 }])

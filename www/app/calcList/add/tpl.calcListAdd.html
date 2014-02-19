@@ -20,20 +20,44 @@
     </div>
 
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
 
             <div class="form-group">
 
                 <h4>Data Items</h4>
 
-                <button type="button" ng-repeat="dataItem in dataItems" ng-disabled="!addRules.dataItem" class="btn btn-info" ng-bind="dataItem.name" ng-click="AddTag(dataItem.name,1)"></button>
+                <div class="button-box">
+                    <button type="button" ng-repeat="dataItem in dataItems" ng-disabled="!addRules.dataItem" class="btn btn-info" ng-bind="dataItem.name" ng-click="AddTag(dataItem.name,1)"></button>
 
 
+                </div>
 
 
             </div>
 
         </div>
+
+
+        <div class="col-md-6">
+
+            <h4>Free Varible</h4>
+
+
+            <div class="form-group">
+
+                <input type="text" " class=" form-control" name="numberVarible" id="numberVarible" placeholder="enter free varible" />
+            </div>
+
+            <div class="button-box">
+
+                <button type="button" class="btn btn-info">Add Free Varible</button>
+                <button type="button" class="btn btn-info">True</button>
+                <button type="button" class="btn btn-info">False</button>
+                <button type="button" class="btn btn-info">0</button>
+                <button type="button" class="btn btn-info">Nothing</button>
+            </div>
+        </div>
+
 
     </div>
 
@@ -41,19 +65,21 @@
 
 
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-4">
 
             <div class="form-group">
 
                 <h4>Operands</h4>
 
-                <button type="button" ng-disabled="!addRules.operands" class="btn btn-warning" ng-click="AddTag('+',2)">+</button>
-                <button type="button" ng-disabled="!addRules.operands" class="btn btn-warning" ng-click="AddTag('-',2)">-</button>
-                <button type="button" ng-disabled="!addRules.operands" class="btn btn-warning" ng-click="AddTag('*',2)">*</button>
-                <button type="button" ng-disabled="!addRules.operands" class="btn btn-warning" ng-click="AddTag('/',2)">/</button>
-                <button type="button" ng-disabled="!addRules.bracketStart" class="btn btn-success" ng-click="AddTag('(',3)">(</button>
-                <button type="button" ng-disabled="!addRules.bracketEnd" class="btn btn-success" ng-click="AddTag(')',4)">)</button>
+                <div class="button-box">
 
+                    <button type="button" ng-disabled="!addRules.operands" class="btn btn-warning" ng-click="AddTag('+',2)">+</button>
+                    <button type="button" ng-disabled="!addRules.operands" class="btn btn-warning" ng-click="AddTag('-',2)">-</button>
+                    <button type="button" ng-disabled="!addRules.operands" class="btn btn-warning" ng-click="AddTag('*',2)">*</button>
+                    <button type="button" ng-disabled="!addRules.operands" class="btn btn-warning" ng-click="AddTag('/',2)">/</button>
+                    <button type="button" ng-disabled="!addRules.bracketStart" class="btn btn-success" ng-click="AddTag('(',3)">(</button>
+                    <button type="button" ng-disabled="!addRules.bracketEnd" class="btn btn-success" ng-click="AddTag(')',4)">)</button>
+                </div>
             </div>
 
 
@@ -62,19 +88,22 @@
             <div class="form-group">
 
                 <h4>Conditional</h4>
-                <button type="button" ng-disabled="!addRules.conditional" class="btn btn-info">if</button>
-                <button type="button" ng-disabled="!addRules.conditional" class="btn btn-info">then</button>
-                <button type="button" ng-disabled="!addRules.conditional" class="btn btn-info">and</button>
-                <button type="button" ng-disabled="!addRules.conditional" class="btn btn-info">or</button>
-                <button type="button" ng-disabled="!addRules.conditional" class="btn btn-info">not</button>
 
+
+                <div class="button-box">
+                    <button type="button" ng-disabled="!addRules.conditional" class="btn btn-info">if</button>
+                    <button type="button" ng-disabled="!addRules.conditional" class="btn btn-info">then</button>
+                    <button type="button" ng-disabled="!addRules.conditional" class="btn btn-info">and</button>
+                    <button type="button" ng-disabled="!addRules.conditional" class="btn btn-info">or</button>
+                    <button type="button" ng-disabled="!addRules.conditional" class="btn btn-info">not</button>
+                </div>
             </div>
 
 
 
         </div>
 
-        <div class="col-md-9">
+        <div class="col-md-8">
 
 
             <div class="form-group">
@@ -92,25 +121,28 @@
 
 
         </div>
+    </div>
+    <div class="row">
         <div class="col-md-12">
 
             <h4>Boolean</h4>
             <div class="form-group">
-                <button type="button" class="btn btn-default" ng-click="AddTag('<=',3)">Less Than Or Equal to <=</button>
-                <button type="button" class="btn btn-default" ng-click="AddTag('<',3)">Less Than <</button>
-                <button type="button" class="btn btn-default" ng-click="AddTag('<',3)">Greater Than ></button>
-                <button type="button" class="btn btn-default" ng-click="AddTag('=>',3)">Greater Than Or Equal to =></button>
-                <button type="button" class="btn btn-default" ng-click="AddTag('==',3)">Equal to ==</button>
-                <button type="button" class="btn btn-default" ng-click="AddTag('!=',3)">Not Equal to !=</button>
 
+                <div class="button-box">
+                    <button type="button" class="btn btn-default" ng-click="AddTag('<=',3)">Less Than Or Equal to <=</button>
+                    <button type="button" class="btn btn-default" ng-click="AddTag('<',3)">Less Than <</button>
+                    <button type="button" class="btn btn-default" ng-click="AddTag('<',3)">Greater Than ></button>
+                    <button type="button" class="btn btn-default" ng-click="AddTag('=>',3)">Greater Than Or Equal to =></button>
+                    <button type="button" class="btn btn-default" ng-click="AddTag('==',3)">Equal to ==</button>
+                    <button type="button" class="btn btn-default" ng-click="AddTag('!=',3)">Not Equal to !=</button>
+                </div>
             </div>
 
 
         </div>
-    </div>
 
 
-    <button type="submit" class="btn btn-primary" ng-click="submitted=true">Submit</button>
+        <button type="submit" class="btn btn-primary" ng-click="submitted=true">Submit</button>
 
 
 </form>
