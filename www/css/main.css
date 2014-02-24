@@ -13,3 +13,20 @@
     margin-right:5px;
     margin-bottom:5px;
 }
+
+
+.calculation-view var, .calculation-view samp{
+    padding:3px;
+
+    border-radius:3px;
+}
+.calculation-view var {
+    border:3px solid #46b8da;
+}
+.calculation-view samp {
+    border:3px solid #d9534f;
+}
+
+.calculation-view var:hover, .calculation-view samp:hover {
+    background-color:#ccc;
+}

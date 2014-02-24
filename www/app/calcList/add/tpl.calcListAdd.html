@@ -10,7 +10,7 @@
                 <label for="Name">Calculation Name</label>
 
 
-                <input type="text" id="name" class="form-control" name="name" ng-model="calculation.Name" placeholder="Calculation Name" required>
+                <input type="text" id="name" class="form-control" name="name" ng-model="calculation.name" placeholder="Calculation Name" required>
 
             </div>
             <div class="alert alert-danger" ng-show="submitted && form.name.$error.required">This field is required</div>
@@ -24,13 +24,12 @@
 
             <div class="form-group">
 
-                <h4>Data Items</h4>
+                <h4>Data Items / Calculations</h4>
 
                 <div class="button-box">
                     <button type="button" ng-repeat="dataItem in dataItems" ng-disabled="!addRules.dataItem" class="btn btn-info" ng-bind="dataItem.name" ng-click="AddTag(dataItem.name,1)"></button>
 
-
-                </div>
+                    <button type="button" ng-repeat="calculation in calculations" ng-disabled="!addRules.dataItem" class="btn btn-danger" ng-bind="calculation.name" ng-click="AddTag(calculation.name,99)"></button></div>
 
 
             </div>
@@ -45,7 +44,7 @@
 
             <div class="form-group">
 
-                <input type="text" " class=" form-control" name="numberVarible" id="numberVarible" placeholder="enter free varible" />
+                <input type="text" class=" form-control" name="numberVarible" id="numberVarible" placeholder="enter free varible" />
             </div>
 
             <div class="button-box">
@@ -107,14 +106,16 @@
 
 
             <div class="form-group">
-                <h4>Calculation</h4>
+                <h4>English Calculation</h4>
 
-                <div name="calculationView" calceditor ng-bind-html="calculationHtml | to_trusted" class="form-control" contenteditable="true">
+                <div name="calculationView" calceditor ng-bind-html="calculationHtml | to_trusted" ng-model="calculation.calculation" class="form-control calculation-view" contenteditable="true">
 
 
                 </div>
 
-                <textarea id="calculation" name="calculation" class="form-control" ng-model="calculation.calculation" placeholder="Enter Calculation Here" required></textarea>
+                <h4>Code</h4>
+
+                <textarea id="calculation" name="calculation" class="form-control" ng-model="calculation.code" placeholder="Enter Calculation Here" required></textarea>
 
             </div>
             <div class="alert alert-danger" ng-show="submitted && form.calculation.$error.required">This field is required</div>

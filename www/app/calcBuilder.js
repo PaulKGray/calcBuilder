@@ -74,17 +74,31 @@ calcBuilder.filter('to_trusted', ['$sce', function ($sce) {
 ///#source 1 1 /app/calclist/add/dir.calceditor.js
 calcBuilder.directive('calceditor', function () {
 	return {
-		restrict: 'A',
-		link: function (scope, element, attrs, ngModelCtrl) {
-			$(function () {
+	    restrict: 'A',
+        require: 'ngModel',
+		link: function (scope, element, attrs, ctrl) {
 
-			    console.log(element);
+		    ctrl.$render = function () {
+		        element.html(ctrl.$viewValue);
+		    };
 
+		    $(function () {
 
+			    //console.log(element);
+		        element.on('blur', function () {
 
+		            scope.$apply(function () {
+
+		                ctrl.$setViewValue(element.html());
+
+		            });
+
+		        });
 			    element.on('mouseover', 'var', function () { alert(this) });
 
-			});
+		    });
+
+		    ctrl.$setViewValue(element.html());
 		}
 	}
 })
@@ -105,8 +119,9 @@ calcBuilder.controller('ctrl.calcList', ['$scope', '$state', 'calculationService
 }])
 ///#source 1 1 /app/calclist/add/ctrl.calclistadd.js
 calcBuilder.controller('ctrl.calcList.Add', ['$scope', '$state', 'calculationService', 'dataItemService', function ($scope, $state, calculationService, dataItemService) {
-    $scope.calculation = { calculation: 'return '};
-    $scope.dataItems = dataItemService.dataItems;
+    $scope.calculation = { code: 'return ', calculation: ''};
+    $scope.dataItems = dataItemService.dataItems;  
+    $scope.calculations = calculationService.calulations;
 
 
     var bracketCount = 0;
@@ -126,11 +141,16 @@ calcBuilder.controller('ctrl.calcList.Add', ['$scope', '$state', 'calculationSer
 
         var calulation = $scope.calculation;
 
+        console.log('hello');
+
+        console.log($scope.calculationView);
+
+        calulation["display"] = $scope.calculationView;
+
         calculationService.addNew(calulation);
 
     };
 
-    $scope.calculationHtml = ' ';
 
     $scope.AddTag = function (AddTag, type) {
 
@@ -146,8 +166,15 @@ calcBuilder.controller('ctrl.calcList.Add', ['$scope', '$state', 'calculationSer
 
                 $scope.addRules.dataItem = false;
                 $scope.addRules.operands = true;
-                $scope.addRules.conditional=  false;
+                $scope.addRules.conditional =  false;
+                $scope.addRules.bracketStart = false;
 
+
+                if (bracketCount > 0) {
+
+                    $scope.addRules.bracketEnd = true;
+
+                }
  
 
                 break;
@@ -161,29 +188,25 @@ calcBuilder.controller('ctrl.calcList.Add', ['$scope', '$state', 'calculationSer
                 $scope.addRules.dataItem = true;
                 $scope.addRules.operands = false;
                 $scope.addRules.conditional = false;
-
-                if (bracketCount > 0) {
-
-                    $scope.addRules.bracketEnd = true;
-
-                }
+                $scope.addRules.bracketStart = true;
+                $scope.addRules.bracketEnd = false;
 
 
                 break;
             // Bracket Start
             case 3:
-
-                htmlTag = '<mark>' + AddTag + '</mark>';
+                               
+                htmlTag = '<code>' + AddTag + '</code>';
                 javascriptTag = AddTag;
                 bracketCount += 1;
                 $scope.addRules.bracketEnd = true;
-
+                $scope.addRules.dataItem = true;
                 break;
             
             // Bracket End
             case 4:
               
-                htmlTag = '<mark>' + AddTag + '</mark>';
+                htmlTag = '<code>' + AddTag + '</code>';
                 javascriptTag = AddTag;
                 bracketCount -= 1;
                 $scope.addRules.operands = false;
@@ -197,11 +220,21 @@ calcBuilder.controller('ctrl.calcList.Add', ['$scope', '$state', 'calculationSer
 
                 break;
 
+            case 99:
+
+                htmlTag = '<samp>' + AddTag + '</samp>';
+                javascriptTag = 'calculation.' + AddTag;
+
+                $scope.addRules.dataItem = false;
+                $scope.addRules.operands = true;
+                $scope.addRules.conditional = false;
+
+
             default:
 
         }
-        $scope.calculation.calculation += javascriptTag;
-        $scope.calculationHtml += htmlTag
+        $scope.calculation.code += javascriptTag;
+        $scope.calculation.calculation += htmlTag
 
 
     };
