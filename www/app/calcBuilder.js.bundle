@@ -8,6 +8,9 @@
 	<file>/app/services/svc.calculations.js</file>
 	<file>/app/services/svc.dataitems.js</file>
   
+  <file>/app/calclist/add/svc.calcadd.js</file>
+  
+  
 	<file>/app/filter/htmltrusted.js</file>
 	<file>/app/calclist/add/dir.calceditor.js</file>
   
