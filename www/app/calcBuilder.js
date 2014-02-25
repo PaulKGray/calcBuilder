@@ -65,6 +65,127 @@ calcBuilder.service('dataItemService', ['FIREBASEURL', '$firebase', function (fi
     }
 
 }]);
+///#source 1 1 /app/calclist/add/svc.calcadd.js
+calcBuilder.factory('calculationEditorService', function () {
+
+    var calculationEditor = {};
+    var bracketCount = 0;
+
+    calculationEditor.addNew = function (type, tag) {
+            
+        var results = ProcessAmendment(type, tag);
+        return results;
+
+    }
+
+
+    calculationEditor.addRules = {
+        dataItem: true,
+        operands: false,
+        bracketStart: true,
+        bracketEnd: false,
+        conditional: true,
+    };
+
+
+    function ProcessAmendment(tag,type) {
+
+        console.log(tag);
+        console.log(type);
+
+        var AddTag = tag.replace(/\s/g, '');
+        var javascriptTag
+        var htmlTag;
+
+        switch (type) {
+            // DataItem
+            case 1:
+
+                htmlTag = '<var>' + tag + '</var>';
+                javascriptTag = 'dataItem.' + AddTag;
+
+                calculationEditor.addRules.dataItem = false;
+                calculationEditor.addRules.operands = true;
+                calculationEditor.addRules.conditional = false;
+                calculationEditor.addRules.bracketStart = false;
+
+                if (bracketCount > 0) {
+
+                    calculationEditor.addRules.bracketEnd = true;
+
+                }
+
+                break;
+                // Oprands
+            case 2:
+
+                htmlTag = '<code>' + tag + '</code>';
+                javascriptTag = '' + AddTag + '';
+
+
+                calculationEditor.addRules.dataItem = true;
+                calculationEditor.addRules.operands = false;
+                calculationEditor.addRules.conditional = false;
+                calculationEditor.addRules.bracketStart = true;
+                calculationEditor.addRules.bracketEnd = false;
+
+
+                break;
+                // Bracket Start
+            case 3:
+
+                htmlTag = '<code>' + tag + '</code>';
+                javascriptTag = AddTag;
+                bracketCount += 1;
+                calculationEditor.addRules.bracketEnd = true;
+                calculationEditor.addRules.dataItem = true;
+                break;
+
+                // Bracket End
+            case 4:
+
+                htmlTag = '<code>' + tag + '</code>';
+                javascriptTag = AddTag;
+                bracketCount -= 1;
+                calculationEditor.addRules.operands = false;
+                calculationEditor.addRules.conditional = false;
+
+                if (bracketCount == 0) {
+
+                    calculationEditor.addRules.bracketEnd = false;
+
+                }
+
+                break;
+
+            case 99:
+
+                htmlTag = '<samp>' + AddTag + '</samp>';
+                javascriptTag = 'calculation.' + AddTag;
+
+                calculationEditor.addRules.dataItem = false;
+                calculationEditor.addRules.operands = true;
+                calculationEditor.addRules.conditional = false;
+
+
+            default:
+
+        }
+   
+        var Returns = { htmlTag: htmlTag, codeTag: javascriptTag }
+
+        return Returns;
+    }
+
+
+
+
+
+
+    return calculationEditor;
+    
+
+});
 ///#source 1 1 /app/filter/htmltrusted.js
 calcBuilder.filter('to_trusted', ['$sce', function ($sce) {
     return function(text) {
@@ -94,7 +215,29 @@ calcBuilder.directive('calceditor', function () {
 		            });
 
 		        });
-			    element.on('mouseover', 'var', function () { alert(this) });
+		        element.on('mouseover', 'var', function () {
+
+		            if (this.childNodes[0] != null) {
+
+		                //http://jsfiddle.net/timdown/4N4ZD/
+
+
+
+
+
+		            //var deleteButton = document.createElement('a');
+		            //deleteButton.classList.add('remove');
+		            //deleteButton.classList.add('btn');
+		            //deleteButton.innerHTML = 'Remove';
+
+		            //this.appendChild(deleteButton);
+		            }
+		        });
+
+		        element.on('mouseleave', 'var', function () {
+
+		            this.removeChild(this.childNodes[1]);
+		        });
 
 		    });
 
@@ -118,7 +261,7 @@ calcBuilder.controller('ctrl.calcList', ['$scope', '$state', 'calculationService
 
 }])
 ///#source 1 1 /app/calclist/add/ctrl.calclistadd.js
-calcBuilder.controller('ctrl.calcList.Add', ['$scope', '$state', 'calculationService', 'dataItemService', function ($scope, $state, calculationService, dataItemService) {
+calcBuilder.controller('ctrl.calcList.Add', ['$scope', '$state', 'calculationService', 'dataItemService', 'calculationEditorService', function ($scope, $state, calculationService, dataItemService, calculationEditorService) {
     $scope.calculation = { code: 'return ', calculation: ''};
     $scope.dataItems = dataItemService.dataItems;  
     $scope.calculations = calculationService.calulations;
@@ -126,16 +269,7 @@ calcBuilder.controller('ctrl.calcList.Add', ['$scope', '$state', 'calculationSer
 
     var bracketCount = 0;
 
-    $scope.addRules = {
-
-        dataItem: true,
-        operands: false,
-        bracketStart: true,
-        bracketEnd: false,
-        conditional: true,
-
-    };
-
+    $scope.addRules = calculationEditorService.addRules;
 
     $scope.addNew = function () {
 
@@ -152,90 +286,12 @@ calcBuilder.controller('ctrl.calcList.Add', ['$scope', '$state', 'calculationSer
     };
 
 
-    $scope.AddTag = function (AddTag, type) {
+    $scope.AddTag = function (tag, type) {
 
-        var javascriptTag
-        var htmlTag;
+        var results = calculationEditorService.addNew(tag, type);
 
-        switch (type) {
-            // DataItem
-            case 1:
-
-                htmlTag = '<var>' + AddTag + '</var>';
-                javascriptTag = 'dataItem.' + AddTag;
-
-                $scope.addRules.dataItem = false;
-                $scope.addRules.operands = true;
-                $scope.addRules.conditional =  false;
-                $scope.addRules.bracketStart = false;
-
-
-                if (bracketCount > 0) {
-
-                    $scope.addRules.bracketEnd = true;
-
-                }
- 
-
-                break;
-             // Oprands
-            case 2:
-
-                htmlTag = '<code>' + AddTag + '</code>';
-                javascriptTag = '' + AddTag + '';
-
-
-                $scope.addRules.dataItem = true;
-                $scope.addRules.operands = false;
-                $scope.addRules.conditional = false;
-                $scope.addRules.bracketStart = true;
-                $scope.addRules.bracketEnd = false;
-
-
-                break;
-            // Bracket Start
-            case 3:
-                               
-                htmlTag = '<code>' + AddTag + '</code>';
-                javascriptTag = AddTag;
-                bracketCount += 1;
-                $scope.addRules.bracketEnd = true;
-                $scope.addRules.dataItem = true;
-                break;
-            
-            // Bracket End
-            case 4:
-              
-                htmlTag = '<code>' + AddTag + '</code>';
-                javascriptTag = AddTag;
-                bracketCount -= 1;
-                $scope.addRules.operands = false;
-                $scope.addRules.conditional = false;
-
-                if (bracketCount == 0) {
-
-                    $scope.addRules.bracketEnd = false;
-
-                }
-
-                break;
-
-            case 99:
-
-                htmlTag = '<samp>' + AddTag + '</samp>';
-                javascriptTag = 'calculation.' + AddTag;
-
-                $scope.addRules.dataItem = false;
-                $scope.addRules.operands = true;
-                $scope.addRules.conditional = false;
-
-
-            default:
-
-        }
-        $scope.calculation.code += javascriptTag;
-        $scope.calculation.calculation += htmlTag
-
+        $scope.calculation.code += results.codeTag;
+        $scope.calculation.calculation += results.htmlTag;
 
     };
 
