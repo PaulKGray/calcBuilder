@@ -20,7 +20,29 @@
 		            });
 
 		        });
-			    element.on('mouseover', 'var', function () { alert(this) });
+		        element.on('mouseover', 'var', function () {
+
+		            if (this.childNodes[0] != null) {
+
+		                //http://jsfiddle.net/timdown/4N4ZD/
+
+
+
+
+
+		            //var deleteButton = document.createElement('a');
+		            //deleteButton.classList.add('remove');
+		            //deleteButton.classList.add('btn');
+		            //deleteButton.innerHTML = 'Remove';
+
+		            //this.appendChild(deleteButton);
+		            }
+		        });
+
+		        element.on('mouseleave', 'var', function () {
+
+		            this.removeChild(this.childNodes[1]);
+		        });
 
 		    });
 
